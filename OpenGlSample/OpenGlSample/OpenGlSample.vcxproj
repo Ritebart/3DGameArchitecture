@@ -366,6 +366,7 @@
     <ClInclude Include="h\FileManager.h" />
     <ClInclude Include="h\Human.h" />
     <ClInclude Include="h\IClean.h" />
+    <ClInclude Include="h\IUpdater.h" />
     <ClInclude Include="h\NonRenderableObject.h" />
     <ClInclude Include="h\Object.h" />
     <ClInclude Include="h\RenderableObject.h" />

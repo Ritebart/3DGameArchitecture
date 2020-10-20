@@ -789,6 +789,9 @@
     <ClInclude Include="h\Human.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="h\IUpdater.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glm\detail\func_common.inl">

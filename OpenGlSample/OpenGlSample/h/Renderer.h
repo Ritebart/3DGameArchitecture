@@ -11,20 +11,24 @@
 #include "../glm/gtc/matrix_transform.hpp"
 
 class RenderableObject;
+class IUpdater;
 
 class Renderer : IClean
 {
 private:
 	GLFWwindow* window;
-	
+	std::vector<RenderableObject> renderableObject;
+
 public:
-	void Render(std::vector<RenderableObject> &renderableObject);
+	void Render();
 	// object들의 값을 받아와서 화면에 그림
 
 	void DrawWindow(const char* exename);
 
-	virtual void Clean() override {};
-	// 윈도우만 그려줌
+	void Update(IUpdater* updateobject);
+	void AddObject(RenderableObject& renderableobject);
+
+	virtual void Clean() override;
 };
 
 #endif // !

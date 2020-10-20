@@ -12,8 +12,8 @@ public:
 	Human(const char* filepath);
 	~Human();
 
-	virtual void Clean() final {}
-	virtual void Update() override {}
+	virtual void Clean() final;
+	virtual void Update() override;
 };
 
 #endif // !HUMAN_H_

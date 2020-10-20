@@ -29,7 +29,7 @@ public:
 	virtual std::vector<glm::vec3> GetNormal();
 	virtual glm::mat4 GetMVP() override;
 
-	virtual void Clean() override {};
+	virtual void Clean() override;
 };
 
 #endif // !RENDERABLEOBJECT_H_

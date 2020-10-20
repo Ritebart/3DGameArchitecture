@@ -12,8 +12,8 @@ public:
 	Cube(const char* filepath);
 	~Cube();
 
-	virtual void Clean() final {}
-	virtual void Update() override {}
+	virtual void Clean() final;
+	virtual void Update() override;
 };
 
 #endif // !CUBE_H_

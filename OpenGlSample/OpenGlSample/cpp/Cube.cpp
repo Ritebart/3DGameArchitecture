@@ -13,3 +13,13 @@ Cube::~Cube()
 {
 
 }
+
+void Cube::Clean()
+{
+
+}
+
+void Cube::Update()
+{
+
+}

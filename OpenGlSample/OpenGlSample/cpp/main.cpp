@@ -25,10 +25,18 @@ int main()
 	human->SetMVP(Projection, View, humanmove);
 
 	Renderer* renderer = new Renderer();
+	renderer->AddObject(*cube);
+	renderer->AddObject(*human);
 
-	std::vector<RenderableObject> renderobject;
-	renderobject.push_back(*cube);
-	renderobject.push_back(*human);
 
-	renderer->Render(renderobject);
+	renderer->Render();
+
+	renderer->Clean();
+
+	delete cube;
+	delete human;
+	delete renderer;
+
+	return 0;
 }
+

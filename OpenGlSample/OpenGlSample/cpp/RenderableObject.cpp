@@ -37,3 +37,8 @@ std::vector<glm::vec3> RenderableObject::GetNormal()
 {
 	return normal;
 }
+
+void RenderableObject::Clean()
+{
+
+}

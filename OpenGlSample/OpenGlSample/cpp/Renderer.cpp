@@ -1,6 +1,7 @@
 #include "../h/Renderer.h"
 #include "../h/RenderableObject.h"
 #include "../h/FileManager.h"
+#include "../h/IUpdater.h"
 
 void Renderer::DrawWindow(const char* exename)
 {
@@ -62,10 +63,38 @@ void Renderer::DrawWindow(const char* exename)
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
 }
-
-void Renderer::Render(std::vector<RenderableObject> &renderableObject)
+void Renderer::AddObject(RenderableObject& renderableobject)
 {
-	DrawWindow("20181210_week 5 report");
+	renderableObject.push_back(renderableobject);
+}
+
+void Renderer::Update(IUpdater* updateobject)
+{
+
+}
+
+void Renderer::Clean()
+{
+	if (!renderableObject.empty())
+	{
+		for (std::vector<RenderableObject>::iterator cleaniter = renderableObject.begin();
+			cleaniter != renderableObject.end();
+			++cleaniter)
+		{
+			cleaniter->Clean();
+		}
+		std::vector<RenderableObject>().swap(renderableObject);
+	}
+	else
+		return;
+}
+
+void Renderer::Render()
+{
+	if (renderableObject.empty())
+		return;
+
+	DrawWindow("20181210_week 7 report");
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);

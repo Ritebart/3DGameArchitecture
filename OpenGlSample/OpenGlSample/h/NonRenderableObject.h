@@ -11,10 +11,10 @@ private:
 protected:
 
 public:
-	virtual void SetMVP(glm::mat4 m, glm::mat4 v, glm::mat4 p) override {}
-	virtual glm::mat4 GetMVP() override {}
+	virtual void SetMVP(glm::mat4 m, glm::mat4 v, glm::mat4 p) override;
+	virtual glm::mat4 GetMVP() override;
 
-	virtual void Clean() override {};
+	virtual void Clean() override;
 };
 
 #endif // !NONRENDERABLEOBJECT_H_

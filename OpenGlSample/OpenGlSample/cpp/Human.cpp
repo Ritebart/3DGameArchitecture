@@ -13,3 +13,13 @@ Human::~Human()
 {
 
 }
+
+void Human::Clean()
+{
+
+}
+
+void Human::Update()
+{
+
+}
