@@ -13,7 +13,7 @@ protected:
 
 
 public:
-	~RenderableObject() {};
+	virtual ~RenderableObject();
 	//RenderableObject(const char* filepath);
 
 

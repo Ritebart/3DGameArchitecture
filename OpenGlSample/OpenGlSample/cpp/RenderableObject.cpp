@@ -8,7 +8,10 @@
 //		indices, indexed_vertices, indexed_uvs,
 //		indexed_normals);
 //}
+RenderableObject::~RenderableObject()
+{
 
+}
 
 void RenderableObject::SetMVP(glm::mat4 m, glm::mat4 v, glm::mat4 p)
 {
