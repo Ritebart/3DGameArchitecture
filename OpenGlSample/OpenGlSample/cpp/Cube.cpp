@@ -23,3 +23,10 @@ void Cube::Update()
 {
 
 }
+
+void Cube::RenDeltaTime()
+{
+	float currentframe = glfwGetTime();
+	DeltaTime = currentframe - lastFrame;
+	lastFrame = currentframe;
+}

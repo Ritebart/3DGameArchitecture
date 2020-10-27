@@ -13,6 +13,7 @@ public:
 	~Human();
 
 	virtual void Clean() final;
+	virtual void RenDeltaTime() override;
 	virtual void Update() override;
 };
 

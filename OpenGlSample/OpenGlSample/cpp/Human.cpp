@@ -23,3 +23,10 @@ void Human::Update()
 {
 
 }
+
+void Human::RenDeltaTime()
+{
+	float currentframe = glfwGetTime();
+	DeltaTime = currentframe - lastFrame;
+	lastFrame = currentframe;
+}

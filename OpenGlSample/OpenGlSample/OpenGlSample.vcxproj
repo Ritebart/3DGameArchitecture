@@ -362,6 +362,7 @@
     <ClInclude Include="glm\vec3.hpp" />
     <ClInclude Include="glm\vec4.hpp" />
     <ClInclude Include="glm\vector_relational.hpp" />
+    <ClInclude Include="h\Camera.h" />
     <ClInclude Include="h\Cube.h" />
     <ClInclude Include="h\FileManager.h" />
     <ClInclude Include="h\Human.h" />
@@ -517,6 +518,7 @@
     <None Include="vs.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cpp\Camera.cpp" />
     <ClCompile Include="cpp\Cube.cpp" />
     <ClCompile Include="cpp\FileManager.cpp" />
     <ClCompile Include="cpp\Human.cpp" />

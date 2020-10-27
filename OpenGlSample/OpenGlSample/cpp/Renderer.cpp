@@ -1,7 +1,13 @@
 #include "../h/Renderer.h"
 #include "../h/RenderableObject.h"
+#include "../h/NonRenderableObject.h"
 #include "../h/FileManager.h"
-#include "../h/IUpdater.h"
+
+void Renderer::SetWindowSize(int width, int height)
+{
+	windowWidth = width;
+	windowHeight = height;
+}
 
 void Renderer::DrawWindow(const char* exename)
 {
@@ -19,7 +25,7 @@ void Renderer::DrawWindow(const char* exename)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(1024, 768, exename, NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, exename, NULL, NULL);
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
@@ -28,10 +34,6 @@ void Renderer::DrawWindow(const char* exename)
 	}
 	glfwMakeContextCurrent(window);
 
-	// We would expect width and height to be 1024 and 768
-	int windowWidth = 1024;
-	int windowHeight = 768;
-	// But on MacOS X with a retina screen it'll be 1024*2 and 768*2, so we get the actual framebuffer size:
 	glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
 
 	// Initialize GLEW
@@ -50,7 +52,7 @@ void Renderer::DrawWindow(const char* exename)
 
 	// Set the mouse at the center of the screen
 	glfwPollEvents();
-	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
+	glfwSetCursorPos(window, windowWidth / 2, windowHeight / 2);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -67,12 +69,12 @@ void Renderer::AddObject(RenderableObject& renderableobject)
 {
 	renderableObject.push_back(renderableobject);
 }
-
-void Renderer::Update(IUpdater* updateobject)
+void Renderer::AddNonrenderObject(std::string name, NonRenderableObject& nonrenderableobject)
 {
-
+	nonrenderableObject.
+		//insert(std::pair<std::string, NonRenderableObject>(name, nonrenderableobject));
+		insert(std::make_pair(name, nonrenderableobject));
 }
-
 void Renderer::Clean()
 {
 	if (!renderableObject.empty())
@@ -85,8 +87,124 @@ void Renderer::Clean()
 		}
 		std::vector<RenderableObject>().swap(renderableObject);
 	}
-	else
+	if (!nonrenderableObject.empty())
+	{
+		nonrenderableObject.clear();
+	}
+	//if (!allupdate->empty())
+	//{
+	//	std::vector<IUpdater>().swap(*allupdate);
+	//}
+}
+
+void Renderer::RenDeltaTime()
+{
+	float currentframe = glfwGetTime();
+	DeltaTime = currentframe - lastFrame;
+	lastFrame = currentframe;
+}
+void Renderer::Update()
+{
+	//std::vector<IUpdater>::iterator updateiter;
+
+	//for (updateiter = allupdate->begin(); updateiter != allupdate->end(); updateiter++)
+	//{
+	//	updateiter->Update();
+	//}
+}
+//void Renderer::AddUpdate(IUpdater* update)
+//{
+//	allupdate->push_back(*update);
+//}
+void Renderer::KeyboardInput(GLFWwindow* window)
+{
+	float cameraSpeed = 10.0f * DeltaTime;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
+	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+	{ // 줌인
+		if (fov < 1.0f)
+			fov = 1.0f;
+		else
+			fov -= 0.5f;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS)
+	{ // 줌아웃
+		if (fov > 45.0f)
+			fov = 45.0f;
+		else
+			fov += 0.5f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS )
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		checkmousecursor = false;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		checkmousecursor = true;
+	}
+}
+
+void Renderer::MouseInput(GLFWwindow* window)
+{
+	if (checkmousecursor == false)
 		return;
+	float xoffset = xpos - lastmousex;
+	float yoffset = lastmousey - ypos;
+	//lastx, lasty는 이 전 프레임의 마우스의 위치좌표
+	//xoffset, yoffset은 전 프레임의 마우스 위치좌표와 현 프레임의 마우스 위치좌표의
+	//차이를 이용해 얼마만큼 화면을 움직여야 할지를 정함.
+	lastmousex = xpos;
+	lastmousey = ypos;
+	// 
+
+	float sensitivity = 0.05;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+	//마우스가 수평으로 움직이면 yaw 값이 변함.
+	//마우스가 수직으로 움직이면 pitch 값이 변함.
+
+	if (pitch >= 90.0f)
+		pitch = 89.0f;
+	if (pitch <= -90.0f)
+		pitch = -89.0f;
+	// 이 이상 화면이 돌아가서 보여지는 화면이 거꾸로 되는 것을 방지
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
+}
+
+void Renderer::SettingCamera()
+{
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		SettingCameraZoom =
+			nonrenderableObject.find("MainCamera")->second.GetProjection();
+		SettingCameraMove =
+			nonrenderableObject.find("MainCamera")->second.GetView();
+	}
+	else
+	{
+		SettingCameraZoom = glm::perspective(glm::radians(fov), (float)windowWidth
+			/ (float)windowHeight, 0.1f, 100.0f);
+		SettingCameraMove = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	}
 }
 
 void Renderer::Render()
@@ -94,7 +212,7 @@ void Renderer::Render()
 	if (renderableObject.empty())
 		return;
 
-	DrawWindow("20181210_week 7 report");
+	DrawWindow("20181210_week middle report");
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -106,12 +224,16 @@ void Renderer::Render()
 	GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
 	std::vector<RenderableObject>::iterator obiter;
-	std::vector<glm::mat4> mvp(renderableObject.size());
+	std::vector<NonRenderableObject>::iterator nonobiter;
+
+	std::vector<glm::mat4> rendermvp(renderableObject.size());
 	std::vector<GLuint> vertexbuffer(renderableObject.size());
 	std::vector<GLuint> uvbuffer(renderableObject.size());
 	std::vector<GLuint> normalbuffer(renderableObject.size());
+
 	int setbuffer = 0;
 	int renderbuffer = 0;
+	
 	for (obiter = renderableObject.begin(); obiter != renderableObject.end(); ++obiter)
 	{
 		glGenBuffers(1, &vertexbuffer[setbuffer]);
@@ -123,25 +245,37 @@ void Renderer::Render()
 		glBufferData(GL_ARRAY_BUFFER, obiter->GetUV().size() * sizeof(glm::vec2), &(obiter->GetUV())[0], GL_STATIC_DRAW);
 
 		glGenBuffers(1, &normalbuffer[setbuffer]);
-		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer[setbuffer]);
+		 glBindBuffer(GL_ARRAY_BUFFER, normalbuffer[setbuffer]);
 		glBufferData(GL_ARRAY_BUFFER, obiter->GetNormal().size() * sizeof(glm::vec3), &(obiter->GetNormal())[0], GL_STATIC_DRAW);
 
-		mvp[setbuffer] = obiter->GetMVP();
+		rendermvp[setbuffer] = obiter->GetMVP();
 		setbuffer++;
 	}		
+
 	glm::mat4 rotate = glm::mat4(1.0f);
 	float rotangle = 1.0f;		
 	
 	do {
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUseProgram(programID);
+		glUseProgram(programID);		
+		RenDeltaTime();
+		KeyboardInput(window);
+
+		glfwGetCursorPos(window, &xpos, &ypos);
+		MouseInput(window);
+
+		SettingCamera();
+		Update();
+
 		renderbuffer = 0;
 		rotate = glm::rotate(rotate, glm::radians(rotangle), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		for (obiter = renderableObject.begin(); obiter != renderableObject.end(); ++obiter)
 		{
-			obiter->SetP(mvp[renderbuffer], rotate);
+			//obiter->SetP(rendermvp[renderbuffer], rotate);
+			obiter->SetMVP(SettingCameraZoom, SettingCameraMove, obiter->GetPosition());
 			glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(obiter->GetMVP())[0][0]);
 			glActiveTexture(GL_TEXTURE0);
 			glUniform1i(TextureID, 0);
