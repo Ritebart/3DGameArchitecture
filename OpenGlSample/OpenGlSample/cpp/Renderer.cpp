@@ -2,6 +2,7 @@
 #include "../h/RenderableObject.h"
 #include "../h/NonRenderableObject.h"
 #include "../h/FileManager.h"
+#include "../h/Time.h"
 
 void Renderer::SetWindowSize(int width, int height)
 {
@@ -102,7 +103,9 @@ void Renderer::RenDeltaTime()
 	float currentframe = glfwGetTime();
 	DeltaTime = currentframe - lastFrame;
 	lastFrame = currentframe;
+
 }
+
 void Renderer::Update()
 {
 	//std::vector<IUpdater>::iterator updateiter;
@@ -256,18 +259,21 @@ void Renderer::Render()
 	float rotangle = 1.0f;		
 	
 	do {
-
+		if (Time::Instance()->PerRenderFrame())
+		{
+			RenDeltaTime();
+			Update();
+		}
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programID);		
-		RenDeltaTime();
+		
 		KeyboardInput(window);
 
 		glfwGetCursorPos(window, &xpos, &ypos);
 		MouseInput(window);
 
 		SettingCamera();
-		Update();
 
 		renderbuffer = 0;
 		rotate = glm::rotate(rotate, glm::radians(rotangle), glm::vec3(0.0f, 1.0f, 0.0f));

@@ -37,7 +37,7 @@ int main()
 	//renderer->AddUpdate(human);
 	//renderer->AddUpdate(maincamera);
 
-	renderer->SetWindowSize(1600, 900);
+	renderer->SetWindowSize(1600, 1200);
 	renderer->Render();
 
 	renderer->Clean();

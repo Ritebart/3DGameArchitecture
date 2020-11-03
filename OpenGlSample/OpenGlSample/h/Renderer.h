@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <Windows.h>
 
 #include "IClean.h"
 #include "IUpdater.h"
@@ -54,10 +55,10 @@ private:
 
 	float fov = 45.0f;
 	// 줌 인, 줌 아웃을 위한 값 작아지면 줌인 커지면 줌아웃
-
 	bool checkmousecursor = true;
+	
 public:
-	float DeltaTime = 0.0f;
+//	float DeltaTime = 0.0f;
 	void SetWindowSize(int width, int height);
 	void Render();
 	// object들의 값을 받아와서 화면에 그림
@@ -67,8 +68,6 @@ public:
 
 	void KeyboardInput(GLFWwindow* window);
 	void MouseInput(GLFWwindow* window);
-
-	//void AddUpdate(IUpdater* update);
 
 	virtual void Clean() override;	
 	virtual void RenDeltaTime() override;

@@ -372,6 +372,7 @@
     <ClInclude Include="h\Object.h" />
     <ClInclude Include="h\RenderableObject.h" />
     <ClInclude Include="h\Renderer.h" />
+    <ClInclude Include="h\Time.h" />
     <ClInclude Include="include\GLFW\glfw3.h" />
     <ClInclude Include="include\GLFW\glfw3native.h" />
     <ClInclude Include="include\GL\eglew.h" />
@@ -526,6 +527,7 @@
     <ClCompile Include="cpp\NonRenderableObject.cpp" />
     <ClCompile Include="cpp\RenderableObject.cpp" />
     <ClCompile Include="cpp\Renderer.cpp" />
+    <ClCompile Include="cpp\Time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
