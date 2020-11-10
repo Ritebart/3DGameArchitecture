@@ -3,6 +3,14 @@
 #include "../h/NonRenderableObject.h"
 #include "../h/FileManager.h"
 #include "../h/Time.h"
+#include "../h/MakeableObjectFucCall.h"
+
+Renderer* Renderer::r_instance;
+
+Renderer::Renderer() 
+{
+	nonrenderableObject = new std::map<std::string, NonRenderableObject>();
+}
 
 void Renderer::SetWindowSize(int width, int height)
 {
@@ -72,8 +80,8 @@ void Renderer::AddObject(RenderableObject& renderableobject)
 }
 void Renderer::AddNonrenderObject(std::string name, NonRenderableObject& nonrenderableobject)
 {
-	nonrenderableObject.
-		//insert(std::pair<std::string, NonRenderableObject>(name, nonrenderableobject));
+	nonrenderableObject->
+		//insert(<std::string, NonRenderableObject>(name, nonrenderableobject));
 		insert(std::make_pair(name, nonrenderableobject));
 }
 void Renderer::Clean()
@@ -88,14 +96,11 @@ void Renderer::Clean()
 		}
 		std::vector<RenderableObject>().swap(renderableObject);
 	}
-	if (!nonrenderableObject.empty())
+	if (!nonrenderableObject->empty())
 	{
-		nonrenderableObject.clear();
+		nonrenderableObject->clear();
 	}
-	//if (!allupdate->empty())
-	//{
-	//	std::vector<IUpdater>().swap(*allupdate);
-	//}
+	MakeableObjectFucCall::Instance()->CallAllClean();
 }
 
 void Renderer::RenDeltaTime()
@@ -108,17 +113,10 @@ void Renderer::RenDeltaTime()
 
 void Renderer::Update()
 {
-	//std::vector<IUpdater>::iterator updateiter;
 
-	//for (updateiter = allupdate->begin(); updateiter != allupdate->end(); updateiter++)
-	//{
-	//	updateiter->Update();
-	//}
+	MakeableObjectFucCall::Instance()->CallAllUpdate();
 }
-//void Renderer::AddUpdate(IUpdater* update)
-//{
-//	allupdate->push_back(*update);
-//}
+
 void Renderer::KeyboardInput(GLFWwindow* window)
 {
 	float cameraSpeed = 10.0f * DeltaTime;
@@ -198,9 +196,9 @@ void Renderer::SettingCamera()
 	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
 	{
 		SettingCameraZoom =
-			nonrenderableObject.find("MainCamera")->second.GetProjection();
+			nonrenderableObject->find("MainCamera")->second.GetProjection();
 		SettingCameraMove =
-			nonrenderableObject.find("MainCamera")->second.GetView();
+			nonrenderableObject->find("MainCamera")->second.GetView();
 	}
 	else
 	{
@@ -215,7 +213,7 @@ void Renderer::Render()
 	if (renderableObject.empty())
 		return;
 
-	DrawWindow("20181210_week middle report");
+	DrawWindow("20181210_week 9 report");
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -258,7 +256,10 @@ void Renderer::Render()
 	glm::mat4 rotate = glm::mat4(1.0f);
 	float rotangle = 1.0f;		
 	
+	MakeableObjectFucCall::Instance()->CallAllInit();
+
 	do {
+
 		if (Time::Instance()->PerRenderFrame())
 		{
 			RenDeltaTime();
@@ -334,5 +335,7 @@ void Renderer::Render()
 	//delete vertexbuffer;
 	//delete& uvbuffer;
 	//delete& normalbuffer;
+	Clean();
+	//MakeableObjectFucCall::Instance()->CallAllClean();
 	glDeleteProgram(programID);
 }

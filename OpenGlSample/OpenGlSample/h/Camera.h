@@ -13,6 +13,7 @@ public:
 	Camera();
 	~Camera();
 
+	virtual void Init() final;
 	virtual void Clean() final;
 	virtual void RenDeltaTime() override;
 	virtual void Update() override;

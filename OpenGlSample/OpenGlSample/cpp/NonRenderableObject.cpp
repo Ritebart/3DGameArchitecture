@@ -1,10 +1,30 @@
 #include "../h/NonRenderableObject.h"
+#include "../h/MakeableObjectFucCall.h"
 
+NonRenderableObject::NonRenderableObject()
+{
+	MakeableObjectFucCall::Instance()->AddUpdateObject(this);
+	MakeableObjectFucCall::Instance()->AddCleanObject(this);
+	MakeableObjectFucCall::Instance()->AddInitObject(this);
+}
 NonRenderableObject::~NonRenderableObject()
 {
 
 }
 
+
+void NonRenderableObject::Init()
+{
+
+}
+void NonRenderableObject::Update()
+{
+
+}
+void NonRenderableObject::RenDeltaTime()
+{
+
+}
 void NonRenderableObject::SetProjection(glm::mat4 p)
 {
 	Projection = p;

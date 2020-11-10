@@ -1,10 +1,42 @@
 #include "../h/RenderableObject.h"
+#include "../h/MakeableObjectFucCall.h"
+#include "../h/FileManager.h"
+#include "../h/Renderer.h"
+
+RenderableObject::RenderableObject()
+{
+
+
+	MakeableObjectFucCall::Instance()->AddUpdateObject(this);
+	MakeableObjectFucCall::Instance()->AddCleanObject(this);
+	MakeableObjectFucCall::Instance()->AddInitObject(this);
+	//MakeableObjectFucCall::Instance()->AddRenderableObject(this);
+}
+RenderableObject::RenderableObject(const char* filepath
+	, float x, float y, float z)
+{
+	bool load = FileManager::Instance()->LoadOBJ(filepath, vertex, uv, normal);
+
+	FileManager::Instance()->indexVBO(vertex, uv, normal,
+		indices, indexed_vertices, indexed_uvs,
+		indexed_normals);
+
+	glm::mat4 move = glm::mat4(1.0f);
+	move = glm::translate(move, glm::vec3(x, y, z));
+
+	SetPosition(move);
+	Renderer::Instance()->AddObject(*this);
+}
 
 RenderableObject::~RenderableObject()
 {
 
 }
 
+void RenderableObject::Init()
+{
+
+}
 void RenderableObject::SetMVP(glm::mat4 m, glm::mat4 v, glm::mat4 p)
 {
 	MVP = m * v * p;

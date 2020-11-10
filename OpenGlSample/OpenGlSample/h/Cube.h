@@ -9,7 +9,7 @@ class Cube : public RenderableObject, public IUpdater
 private:
 	
 public:
-	Cube(const char* filepath);
+	Cube(const char* filepath, float x, float y, float z);
 	~Cube();
 
 	virtual void Clean() final;

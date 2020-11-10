@@ -367,11 +367,14 @@
     <ClInclude Include="h\FileManager.h" />
     <ClInclude Include="h\Human.h" />
     <ClInclude Include="h\IClean.h" />
+    <ClInclude Include="h\IInit.h" />
     <ClInclude Include="h\IUpdater.h" />
     <ClInclude Include="h\NonRenderableObject.h" />
+    <ClInclude Include="h\MakeableObjectFucCall.h" />
     <ClInclude Include="h\Object.h" />
     <ClInclude Include="h\RenderableObject.h" />
     <ClInclude Include="h\Renderer.h" />
+    <ClInclude Include="h\TestCh.h" />
     <ClInclude Include="h\Time.h" />
     <ClInclude Include="include\GLFW\glfw3.h" />
     <ClInclude Include="include\GLFW\glfw3native.h" />
@@ -525,6 +528,7 @@
     <ClCompile Include="cpp\Human.cpp" />
     <ClCompile Include="cpp\main.cpp" />
     <ClCompile Include="cpp\NonRenderableObject.cpp" />
+    <ClCompile Include="cpp\MakeableObjectFucCall.cpp" />
     <ClCompile Include="cpp\RenderableObject.cpp" />
     <ClCompile Include="cpp\Renderer.cpp" />
     <ClCompile Include="cpp\Time.cpp" />

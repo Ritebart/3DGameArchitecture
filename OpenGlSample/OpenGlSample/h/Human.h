@@ -9,7 +9,7 @@ class Human : public RenderableObject, public IUpdater
 private:
 
 public:
-	Human(const char* filepath);
+	Human(const char* filepath, float x, float y, float z);
 	~Human();
 
 	virtual void Clean() final;

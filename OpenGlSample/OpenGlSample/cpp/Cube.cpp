@@ -1,13 +1,14 @@
 #include "../h/Cube.h"
 #include "../h/FileManager.h"
 
-Cube::Cube(const char* filepath)
+Cube::Cube(const char* filepath, float x, float y, float z)
+	: RenderableObject(filepath, x, y, z)
 {
-	bool load = FileManager::Instance()->LoadOBJ(filepath, vertex, uv, normal);
+	//bool load = FileManager::Instance()->LoadOBJ(filepath, vertex, uv, normal);
 
-	FileManager::Instance()->indexVBO(vertex, uv, normal,
-		indices, indexed_vertices, indexed_uvs,
-		indexed_normals);
+	//FileManager::Instance()->indexVBO(vertex, uv, normal,
+	//	indices, indexed_vertices, indexed_uvs,
+	//	indexed_normals);
 }
 Cube::~Cube()
 {
@@ -26,7 +27,7 @@ void Cube::Update()
 
 void Cube::RenDeltaTime()
 {
-	float currentframe = glfwGetTime();
-	DeltaTime = currentframe - lastFrame;
-	lastFrame = currentframe;
+	//float currentframe = glfwGetTime();
+	//DeltaTime = currentframe - lastFrame;
+	//lastFrame = currentframe;
 }

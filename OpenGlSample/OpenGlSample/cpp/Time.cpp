@@ -26,8 +26,8 @@ bool Time::PerRenderFrame()
 	{
 		preframecount = framecount;
 
-		std::cout << "dis : " << timedistance << " frame : " <<
-			(frameinfo.QuadPart / timedistance) << std::endl;
+		//std::cout << "dis : " << timedistance << " frame : " <<
+		//	(frameinfo.QuadPart / timedistance) << std::endl;
 		return true;
 	}
 	return false;

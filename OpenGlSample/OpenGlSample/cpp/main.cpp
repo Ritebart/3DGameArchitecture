@@ -4,6 +4,7 @@
 #include "../h/FileManager.h"
 #include "../h/IUpdater.h"
 #include "../h/Renderer.h"
+#include "../h/TestCh.h"
 
 int main()
 {
@@ -14,38 +15,22 @@ int main()
 		glm::vec3(0, 10, 0)
 	);
 
-	glm::mat4 cubemove = glm::mat4(1.0f);
-	cubemove = glm::translate(cubemove, glm::vec3(3.0f, 0.0f, 0.0f));
-	glm::mat4 humanmove = glm::mat4(1.0f);
-	humanmove = glm::translate(humanmove, glm::vec3(0.0f, -4.0f, 0.0f));
-
-	Cube* cube = new Cube("cube.obj");
-	Human* human = new Human("human.obj");
+	Cube* cube = new Cube("cube.obj", 3.0f, 0.0f, 0.0f);
+	Human* human = new Human("human.obj", 0.0f, -4.0f, 0.0f);
+	TestCh* test = new TestCh();
 
 	Camera* maincamera = new Camera();
 	maincamera->SetProjection(cameraprojection);
 	maincamera->SetView(cameraview);
 
-	cube->SetPosition(cubemove);
-	human->SetPosition(humanmove);
+	Renderer::Instance()->AddNonrenderObject("MainCamera", *maincamera);
 
-	Renderer* renderer = new Renderer();
-	renderer->AddObject(*cube);
-	renderer->AddObject(*human);
-	renderer->AddNonrenderObject("MainCamera", *maincamera);
-	//renderer->AddUpdate(cube);
-	//renderer->AddUpdate(human);
-	//renderer->AddUpdate(maincamera);
-
-	renderer->SetWindowSize(1600, 1200);
-	renderer->Render();
-
-	renderer->Clean();
+	Renderer::Instance()->SetWindowSize(1600, 1200);
+	Renderer::Instance()->Render();
 
 	delete cube;
 	delete human;
 	delete maincamera;
-	delete renderer;
 
 	return 0;
 }

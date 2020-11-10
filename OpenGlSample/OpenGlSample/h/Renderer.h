@@ -13,6 +13,7 @@
 #include "../include/GLFW/glfw3.h" 
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
+//#include "../h/NonRenderableObject.h"
 
 class RenderableObject;
 class NonRenderableObject;
@@ -20,18 +21,14 @@ class NonRenderableObject;
 class Renderer : public IClean, public IUpdater
 {
 private:
+	static Renderer* r_instance;
+	Renderer();
+
 	GLFWwindow* window;
 	std::vector<RenderableObject> renderableObject;
-	// RenderableObject 타입 벡터는 전방선언으로 선언에 문제가 없음
-	//std::vector<NonRenderableObject> *nonrenderableObject;
-	std::map<std::string, NonRenderableObject> nonrenderableObject;
-	// NonRenderableObject 타입은 전방선언만으론 c2036 에러 발생
-	// 통상적이라면 RenderableObject 벡터도 포인터 선언으로 하는 것이 아마 맞지만
-	// 정상적으로 실행되기에 무언가가 이상하지만 
-	// NonRenderableObject만 포인터 벡터로 선언하면 해결되기에 일단 보류.
+	std::map<std::string, NonRenderableObject> *nonrenderableObject;
 
-	//std::vector<IUpdater> *allupdate;
-	//추상 클래스의 인스턴스가 되게 제작되어서 실행이 안됨
+
 	void SettingCamera();
     void DrawWindow(const char* exename);
 	glm::vec3 cameraPos = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -59,6 +56,14 @@ private:
 	
 public:
 //	float DeltaTime = 0.0f;
+	static Renderer* Instance()
+	{
+		if (r_instance == NULL)
+		{
+			r_instance = new Renderer();
+		}
+		return r_instance;
+	}
 	void SetWindowSize(int width, int height);
 	void Render();
 	// object들의 값을 받아와서 화면에 그림
