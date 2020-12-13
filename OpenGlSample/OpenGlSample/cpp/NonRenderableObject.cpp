@@ -1,12 +1,34 @@
 #include "../h/NonRenderableObject.h"
 #include "../h/MakeableObjectFucCall.h"
+#include "../h/FileManager.h"
+#include "../h/Renderer.h"
 
 NonRenderableObject::NonRenderableObject()
+{
+	//MakeableObjectFucCall::Instance()->AddUpdateObject(this);
+	//MakeableObjectFucCall::Instance()->AddCleanObject(this);
+	//MakeableObjectFucCall::Instance()->AddInitObject(this);
+}
+NonRenderableObject::NonRenderableObject(
+	std::string name, glm::mat4 projection, glm::mat4 view, 
+	float x, float y, float z)
 {
 	MakeableObjectFucCall::Instance()->AddUpdateObject(this);
 	MakeableObjectFucCall::Instance()->AddCleanObject(this);
 	MakeableObjectFucCall::Instance()->AddInitObject(this);
+		FileManager::Instance()->indexVBO(vertex, uv, normal,
+			indices, indexed_vertices, indexed_uvs,
+			indexed_normals);
+
+		glm::mat4 move = glm::mat4(1.0f);
+		move = glm::translate(move, glm::vec3(x, y, z));
+
+		SetPosition(move);
+		SetProjection(projection);
+		SetView(view);
+		Renderer::Instance()->AddNonrenderObject(name, *this);
 }
+
 NonRenderableObject::~NonRenderableObject()
 {
 

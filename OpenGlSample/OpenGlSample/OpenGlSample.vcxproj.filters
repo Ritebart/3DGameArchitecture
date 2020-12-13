@@ -807,6 +807,12 @@
     <ClInclude Include="h\IInit.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="h\RenderableObjectManage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="h\NonRenderableObjectManage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glm\detail\func_common.inl">
@@ -1243,6 +1249,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="cpp\MakeableObjectFucCall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\RenderableObjectManage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\NonRenderableObjectManage.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,6 +11,9 @@ private:
 
 public:
 	Camera();
+	Camera(
+		std::string name, glm::mat4 projection, glm::mat4 view,
+		float x = 0, float y = 0, float z = 0);
 	~Camera();
 
 	virtual void Init() final;

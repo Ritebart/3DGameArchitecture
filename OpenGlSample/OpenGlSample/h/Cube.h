@@ -7,11 +7,12 @@
 class Cube : public RenderableObject, public IUpdater
 {
 private:
-	
+	int x = 0;
 public:
 	Cube(const char* filepath, float x, float y, float z);
 	~Cube();
 
+	virtual void Init() final;
 	virtual void Clean() final;
 	virtual void RenDeltaTime() override;
 	virtual void Update() override;

@@ -5,16 +5,19 @@
 
 RenderableObject::RenderableObject()
 {
+	//MakeableObjectFucCall::Instance()->AddUpdateObject(this);
+	//MakeableObjectFucCall::Instance()->AddCleanObject(this);
+	//MakeableObjectFucCall::Instance()->AddInitObject(this);
 
-
-	MakeableObjectFucCall::Instance()->AddUpdateObject(this);
-	MakeableObjectFucCall::Instance()->AddCleanObject(this);
-	MakeableObjectFucCall::Instance()->AddInitObject(this);
 	//MakeableObjectFucCall::Instance()->AddRenderableObject(this);
 }
 RenderableObject::RenderableObject(const char* filepath
 	, float x, float y, float z)
 {
+	MakeableObjectFucCall::Instance()->AddUpdateObject(this);
+	MakeableObjectFucCall::Instance()->AddCleanObject(this);
+	MakeableObjectFucCall::Instance()->AddInitObject(this);
+
 	bool load = FileManager::Instance()->LoadOBJ(filepath, vertex, uv, normal);
 
 	FileManager::Instance()->indexVBO(vertex, uv, normal,
@@ -35,7 +38,6 @@ RenderableObject::~RenderableObject()
 
 void RenderableObject::Init()
 {
-
 }
 void RenderableObject::SetMVP(glm::mat4 m, glm::mat4 v, glm::mat4 p)
 {

@@ -12,7 +12,7 @@ private:
 protected:
 	bool load;
 	// obj 파일 로딩을 위한 변수
-
+	glm::mat4 position = glm::mat4(1.0f);
 
 public:
 	virtual ~RenderableObject();
@@ -33,7 +33,7 @@ public:
 
 	virtual void Init() override;
 	virtual void RenDeltaTime() {}
-	virtual void Update() { std::cout << "렌더에이블 실행" << std::endl; }
+	virtual void Update() { }
 	virtual void Clean() override;
 };
 

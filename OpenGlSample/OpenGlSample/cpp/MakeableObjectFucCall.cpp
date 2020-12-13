@@ -12,7 +12,6 @@ void MakeableObjectFucCall::AddInitObject(IInit* init)
 void MakeableObjectFucCall::AddUpdateObject(IUpdater* updater)
 {
 	objupdater.push_back(updater);
-	//objupdater->push_back(*updater);
 }
 void MakeableObjectFucCall::AddCleanObject(IClean* cleaner)
 {
@@ -35,11 +34,6 @@ void MakeableObjectFucCall::CallAllUpdate()
 	{
 		(*iter)->Update();
 	}
-	//std::vector<IUpdater>::iterator iter;
-	//for (iter = objupdater->begin(); iter != objupdater->end(); iter++)
-	//{
-	//	iter->Update();
-	//}
 }
 void MakeableObjectFucCall::CallAllClean()
 {

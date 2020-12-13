@@ -9,7 +9,9 @@ Renderer* Renderer::r_instance;
 
 Renderer::Renderer() 
 {
-	nonrenderableObject = new std::map<std::string, NonRenderableObject>();
+	nonrenderableObject = new std::map<std::string,NonRenderableObject>();
+	//fbxmanager = FbxManager::Create();
+	//fbxscene = FbxScene::Create(fbxmanager, "MyScene");
 }
 
 void Renderer::SetWindowSize(int width, int height)
@@ -113,7 +115,6 @@ void Renderer::RenDeltaTime()
 
 void Renderer::Update()
 {
-
 	MakeableObjectFucCall::Instance()->CallAllUpdate();
 }
 
@@ -208,12 +209,17 @@ void Renderer::SettingCamera()
 	}
 }
 
-void Renderer::Render()
+void Renderer::AddObjectModel(glm::mat4 model)
+{
+	objectmodel.push_back(model);
+}
+
+void Renderer::Render(const char* gamename)
 {
 	if (renderableObject.empty())
 		return;
 
-	DrawWindow("20181210_week 9 report");
+	DrawWindow(gamename);
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -278,7 +284,6 @@ void Renderer::Render()
 
 		renderbuffer = 0;
 		rotate = glm::rotate(rotate, glm::radians(rotangle), glm::vec3(0.0f, 1.0f, 0.0f));
-
 		for (obiter = renderableObject.begin(); obiter != renderableObject.end(); ++obiter)
 		{
 			//obiter->SetP(rendermvp[renderbuffer], rotate);
@@ -324,6 +329,7 @@ void Renderer::Render()
 			glDisableVertexAttribArray(1);
 			glDisableVertexAttribArray(2);
 		}
+		objectmodel.clear();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 

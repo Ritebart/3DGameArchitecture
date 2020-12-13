@@ -15,6 +15,14 @@ protected:
 
 public:
 	NonRenderableObject();
+	NonRenderableObject(
+		std::string name,
+		glm::mat4 projection,
+		glm::mat4 view,
+		float x = 0, 
+		float y = 0, 
+		float z = 0
+		);
 	virtual ~NonRenderableObject();
 
 	void SetProjection(glm::mat4 p);
